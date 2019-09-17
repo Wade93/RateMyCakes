@@ -22,7 +22,6 @@ module.exports = {
         .catch(err => res.json(err))
     },
     update: function(req, res){
-        console.log("REQUEST BODY: ",req.body);
         Cake.updateOne({_id: req.params.id}, {
           $push: {ratings: JSON.parse(req.body.rating), comments: (req.body.comment)}
         })
