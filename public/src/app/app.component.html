@@ -1,0 +1,53 @@
+<div class="container">
+    <div class="row">
+      <h1 class="font-weight-normal">Rate My Cakes!</h1>
+    </div>
+    <div class="row thick border rounded border-dark">
+      <div class="col-5 border-3 border-dark">
+          <h3>New Cake</h3>
+          <form (submit)="onSubmit()">
+              <div class="form-group">
+                  <label for="newCake.baker_name">Baker Name</label>
+                  <input class="form-control" type="text" name="newCake.baker_name" [(ngModel)]="newCake.baker_name" />
+              </div>
+              <div class="form-group">
+                  <label for="newCake.image">Cake Image URL</label>
+                  <input class="form-control" type="text" name="newCake.image" [(ngModel)]="newCake.image" />
+              </div>
+              <input class="btn btn-dark" type="submit" value="Create Cake!" />
+            </form>
+      </div>
+      <div class="col-7 all-cakes overflow-auto">
+        <div class="row py-2 border border-dark" *ngFor="let cake of cakes">
+          <div class="col-5">
+            <img (click)="showCakeInfo(cake['_id'])" class="img-small" src="{{cake['image']}}" alt="Picture of cake">
+          </div>
+          <div class="col-7">
+            <h4 class="font-weight-normal">{{cake["baker_name"]}}</h4>
+            <h5 class="font-weight-normal">Rate this cake!</h5>
+            <form (submit)="rateOneCake(cake['_id'])">
+              <div class="form-group">
+                <label for="newRating.rating">Rate 1-5</label>
+                <select class="form-control" name="newRating.rating" id="newRating.rating" [(ngModel)]="newRating.rating">
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option>5</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="newRating.comment">Leave a comment!</label>
+                <textarea class="form-control" name="newRating.comment" id="newRating.comment" rows="3" [(ngModel)]="newRating.comment"></textarea>
+              </div>
+              <button type="submit" class="btn btn-secondary">Rate</button>
+            </form>
+            <button class="btn btn-dark" (click)="destroyCake(cake['_id'])">Delete</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <app-cake *ngIf="showCake == true" [cakeToShow] = "cakeInfo" [rating] = "avgRating"></app-cake>
+</div>
+
+<router-outlet></router-outlet>

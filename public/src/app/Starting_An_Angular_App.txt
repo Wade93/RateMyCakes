@@ -1,0 +1,99 @@
+Creating an Angular app instructions.
+
+Download angular cli
+
+create new project folder.
+
+cd into your project folder.
+
+RUN:  ng new public
+    add angular routing (css)
+    -----this will build the public folder in your project where you will work on your app-----
+
+cd into public.
+
+RUN: ng build --watch
+    (keep this running and open a separate terminal to continue)
+
+in your new terminal window, cd into your main project folder where you have your server.js file.
+
+open your server.js file and add in the following line:
+
+        app.use(express.static( __dirname + '/public/dist/public' ));
+
+Now we need to add SERVICE to our angular app.
+
+aka, we need to create a connection to our data (MODELS)
+
+    This is where Observables and Subscribes come into play.
+    
+    Observables are variables we create and 'send-out' to collect data from our database via AJAX.
+    Observables have a built in subscribe method that allow us to 'listen' for that data to come back.
+
+    Once we receive the data back, we can run a function using that data.
+
+ADDING SERVICE:
+
+cd into the public folder.
+
+RUN: ng g s http
+    (this means "generate service" and call it "http")
+    (why call it http? to make our lives simpler I suppose)
+
+we now have a new file called "http.service.ts"  (ts stands for typescript)
+
+we will access this file elsewhere and use it to connect to our database.
+
+
+
+::::::IN THE APP.MODULE.TS FILE::::::
+Go to your app.module.ts file (should be in public/src/app)
+Import your new HttpService class with: '''' import { HttpService } from './http.service'; ''''
+
+Add the HttpService class to your list of providers in the app.module.ts file.
+
+Now import the built in Angular class HttpClientModule with: '''' import { HttpClientModule } from '@angular/common/http'; ''''
+
+Add the HttpClientModule class to your list of imports in the app.module.ts file.
+
+import the following at the top:
+'''''  import { FormsModule } from '@angular/forms';  '''''
+and add to your list of imports.
+
+
+
+For any models you have that involve CRUD applications ... you will create
+new components using the following command:
+
+''''' ng generate component component_name ''''''
+
+Once your components are generated, you will need to add them as dependecies in different files.
+
+example:
+'''''  import { TaskComponent } from './task/task.component';  '''''
+adding TaskComponent to the list of declarations.
+
+
+
+::::::IN THE HTTP.SERVICE.TS FILE::::::
+THIS IS WHERE WE WILL CONNECT TO OUR SERVER'S ROUTES AND GET/POST THE DATA
+
+Now import the built in Angular class HttpClient into your http.service.ts file:
+    '''' import { HttpClientModule } from '@angular/common/http'; ''''
+
+Add the HttpClient class to your list of imports in the app.module.ts file.
+
+We will be creating methods here that return responses from our http requests.
+
+
+
+
+::::::IN THE APP.COMPONENT.TS FILE::::::
+THIS IS WHERE WE ESTABLISH OBSERVABLES AND SEND INSTRUCTIONS TO OUR HttpService CLASS!!!
+WE SUBSCRIBE TO OUR OBSERVABLES AND PROCESS THE DATA WHEN IT IS RETURNED.
+
+
+import the HttpService class at the top with: ''''' import { HttpService } from './http.service'; '''''
+
+add the following inside your constructor method parameters: ''''  private _httpService: HttpService  ''''
+
